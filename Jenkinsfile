@@ -2,7 +2,7 @@
 @Library(['cicd-pipeline-lib']) _
 
 pipeline {
-    agent 'none'
+    agent 'any'
     options {
         timestamps()
     }
