@@ -35,7 +35,7 @@
         <artifact.repo.host>localhost</artifact.repo.host>
         <artifact.repo.port>8081</artifact.repo.port>
         
-        <skipCompile>false</skipCompile>
+        <skipSourceCompile>false</skipSourceCompile>
         <skipTestCompile>false</skipTestCompile>
     </properties>
     
@@ -240,7 +240,7 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
-                            <skip>${skipCompile}</skip>
+                            <skip>${skipSourceCompile}</skip>
                         </configuration>
                     </execution>
                     <execution>
