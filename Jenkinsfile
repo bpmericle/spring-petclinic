@@ -21,15 +21,33 @@ pipeline {
             }
         }
         stage('Unit Tests and Static Analysis') {
-            steps {
-                executeUnitTestsAndStaticAnalysisStageSteps()
-            }
-            post {
-                success {
-                    executeUnitTestsAndStaticAnalysisStagePostSuccessSteps()
+            failFast true
+            parallel {
+                stage('Unit Tests') {
+                    steps {
+                        executeUnitTestsStageSteps()
+                    }
+                    post {
+                        success {
+                            executeUnitTestsStagePostSuccessSteps()
+                        }
+                        failure {
+                            executeUnitTestsStagePostFailureSteps()
+                        }
+                    }
                 }
-                failure {
-                    executeUnitTestsAndStaticAnalysisStagePostFailureSteps()
+                stage('Static Analysis') {
+                    steps {
+                        executeStaticAnalysisStageSteps()
+                    }
+                    post {
+                        success {
+                            executeStaticAnalysisStagePostSuccessSteps()
+                        }
+                        failure {
+                            executeStaticAnalysisStagePostFailureSteps()
+                        }
+                    }
                 }
             }
         }
