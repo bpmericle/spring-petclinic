@@ -266,7 +266,7 @@
         <site>
             <id>nexus</id>
             <name>Petclinic Website</name>
-            <url>dav:${artifact.repo.protocol}://${artifact.repo.host}:${artifact.repo.port}/repository/crosslake-sites/</url>
+            <url>dav:${artifact.repo.protocol}://${artifact.repo.host}:${artifact.repo.port}/repository/crosslake-sites/${project.artifactId}</url>
         </site>
     </distributionManagement>
 
