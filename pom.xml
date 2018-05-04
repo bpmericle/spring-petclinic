@@ -254,7 +254,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>Ï
+            </plugin>
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.7.1</version>
