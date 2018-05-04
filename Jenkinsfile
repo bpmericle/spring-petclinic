@@ -20,7 +20,7 @@ pipeline {
                 }
             }
         }
-        stage('Unit Tests and Static Analysis') {
+        stage('Tests') {
             failFast true
             parallel {
                 stage('Unit Tests') {
@@ -36,18 +36,31 @@ pipeline {
                         }
                     }
                 }
-                stage('Static Analysis') {
+                stage('Integration Tests') {
                     steps {
-                        executeStaticAnalysisStageSteps()
+                        executeIntegrationTestsStageSteps()
                     }
                     post {
                         success {
-                            executeStaticAnalysisStagePostSuccessSteps()
+                            executeIntegrationTestsStagePostSuccessSteps()
                         }
                         failure {
-                            executeStaticAnalysisStagePostFailureSteps()
+                            executeIntegrationTestsStagePostFailureSteps()
                         }
                     }
+                }
+            }
+        }
+        stage('Static Analysis') {
+            steps {
+                executeStaticAnalysisStageSteps()
+            }
+            post {
+                success {
+                    executeStaticAnalysisStagePostSuccessSteps()
+                }
+                failure {
+                    executeStaticAnalysisStagePostFailureSteps()
                 }
             }
         }
