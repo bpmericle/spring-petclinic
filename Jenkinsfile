@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-@Library(['pipeline-lib']) _
+@Library(['cicd-pipeline-lib']) _
 
 pipeline {
     agent 'none'
