@@ -34,6 +34,9 @@
         <artifact.repo.protocol>http</artifact.repo.protocol>
         <artifact.repo.host>localhost</artifact.repo.host>
         <artifact.repo.port>8081</artifact.repo.port>
+        
+        <skipCompile>false</skipCompile>
+        <skipTestCompile>false</skipTestCompile>
     </properties>
     
     <scm>
@@ -225,6 +228,33 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${skipCompile}</skip>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${skipTestCompile}</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>Ï
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.7.1</version>
