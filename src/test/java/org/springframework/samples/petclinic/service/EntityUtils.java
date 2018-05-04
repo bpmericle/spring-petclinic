@@ -38,6 +38,7 @@ public abstract class EntityUtils {
      * @param entities    the collection to search
      * @param entityClass the entity class to look up
      * @param entityId    the entity id to look up
+     * @param <T>         a type of BaseEntity
      * @return the found entity
      * @throws ObjectRetrievalFailureException if the entity was not found
      */

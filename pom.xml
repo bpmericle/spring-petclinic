@@ -15,7 +15,6 @@
     <name>petclinic</name>
 
     <properties>
-
         <!-- Generic properties -->
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,13 +27,15 @@
         <wro4j.version>1.8.0</wro4j.version>
 
         <jacoco.version>0.8.1</jacoco.version>
+        
         <!-- Sonar -->
-        <!-- The destination file for the code coverage report has to be set to the same value
-        in the parent pom and in each module pom. Then JaCoCo will add up information in
-        the same report, so that, it will give the cross-module code coverage. -->
         <sonar.jacoco.itReportPath>${project.build.directory}/jacoco-it.exec</sonar.jacoco.itReportPath>
         <sonar.groovy.binaries>${project.build.outputDirectory}</sonar.groovy.binaries>
         <sonar.junit.reportPaths>${project.build.directory}/surefire-reports</sonar.junit.reportPaths>
+        
+        <artifact.repo.protocol>http</artifact.repo.protocol>
+        <artifact.repo.host>localhost</artifact.repo.host>
+        <artifact.repo.port>8081</artifact.repo.port>
     </properties>
     
     <scm>
@@ -226,6 +227,17 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <plugin>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.wagon</groupId>
+                        <artifactId>wagon-webdav-jackrabbit</artifactId>
+                        <version>3.0.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
 
@@ -236,5 +248,77 @@
             <url>http://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
     </licenses>
+    
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>Crosslake Releases</name>
+            <url>${artifact.repo.protocol}://${artifact.repo.host}:${artifact.repo.port}/repository/crosslake-releases/</url>
+        </repository>
+        
+        <snapshotRepository>
+            <uniqueVersion>true</uniqueVersion>
+            <id>nexus</id>
+            <name>Crosslake Snapshots</name>
+            <url>${artifact.repo.protocol}://${artifact.repo.host}:${artifact.repo.port}/repository/crosslake-snapshots/</url>
+        </snapshotRepository>
+        
+        <site>
+            <id>nexus</id>
+            <name>Petclinic Website</name>
+            <url>dav:${artifact.repo.protocol}://${artifact.repo.host}:${artifact.repo.port}/repository/crosslake-sites/</url>
+        </site>
+    </distributionManagement>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.9</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changelog-plugin</artifactId>
+                <version>2.3</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.5</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>javadoc-no-fork</report>
+                            <report>test-javadoc-no-fork</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.21.0</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report-only</report>
+                            <report>failsafe-report-only</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>
